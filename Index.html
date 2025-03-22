@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,53 +8,85 @@
     <title>SEO Echelon | Cost Calculator</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 flex justify-center items-center h-screen">
 
-    <div class="w-full max-w-md bg-white p-6 rounded-2xl shadow-lg">
-        <h2 class="text-2xl text-center font-bold text-gray-800 mb-4"><span class="text-orange-500">SEO</span>Echelon <br> Cost Calculator</h2>
-
-        <!-- Input Slider -->
-        <div class="mb-12">
-            <label for="slider" class="block text-gray-700 font-medium mb-2">
-                Total Hired
-            </label>
-            <div class="relative w-full">
-                <!-- Slider -->
-                <input 
-                    type="range" 
-                    id="slider" 
-                    min="0" 
-                    max="10" 
-                    value="0"
-                    class="w-full h-2 rounded-lg appearance-none bg-gray-300 
-                    [&::-webkit-slider-thumb]:appearance-none 
-                    [&::-webkit-slider-thumb]:w-6 
-                    [&::-webkit-slider-thumb]:h-6 
-                    [&::-webkit-slider-thumb]:bg-orange-500 
-                    [&::-webkit-slider-thumb]:rounded-full 
-                    [&::-webkit-slider-thumb]:cursor-pointer"
-                />
-
-                <!-- Value Display Below the Circle -->
-                    <div 
-                    id="sliderValueDisplay" 
-                    class="absolute top-full mt-2 bg-orange-500 text-white text-xs font-medium px-2 py-1 rounded-md shadow-lg
-                    before:content-[''] before:absolute before:-bottom-[-24px] before:left-1/2 before:-translate-x-1/2 
-                    before:border-[6px] before:border-transparent before:border-b-orange-500"
-                >
-                    0
-                </div>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen p-8">
+    <div class="flex flex-col md:flex-row gap-8 w-full max-w-6xl">
+        
+        <!-- Left Side (Medical Assistant Cost Comparison) -->
+        <div class="w-2/4 bg-white p-6 rounded-2xl shadow-lg flex flex-col">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4">
+                Medical Assistant Cost Comparison
+            </h2>
+            
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                <table class="w-full text-sm text-left text-gray-500">
+                    <thead class="text-xs text-center text-gray-700 uppercase bg-gray-100">
+                        <tr>
+                            <th scope="col" class="px-6 py-3"></th>
+                            <th scope="col" class="px-6 py-3">In-house from MSR Employee</th>
+                            <th scope="col" class="px-6 py-3">VA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b text-center">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 bg-gray-50">
+                                Annual Wage
+                            </th>
+                            <td class="px-6 py-4">Silver</td>
+                            <td class="px-6 py-4 bg-gray-50">Laptop</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
-        <!-- Total Cost Display -->
-        <div class="flex justify-between items-center bg-orange-500 p-4 rounded-xl">
-            <span class="text-white font-semibold">Total Cost:</span>
-            <span id="totalCost" class="text-xl font-bold text-white">$0</span>
+        <!-- Right Side (Savings Calculator) -->
+        <div class="w-2/3 bg-white p-6 rounded-2xl shadow-lg">
+            <h1 class="text-xl font-bold text-gray-800 mb-4">Savings Calculator</h1>
+
+            <div class="w-full bg-gray-100 p-6 rounded-2xl shadow-md">
+                <!-- Input Slider -->
+                <div class="mb-10">
+                    <label for="slider" class="block text-gray-700 font-medium mb-3">
+                        Total Hired
+                    </label>
+                    <div class="relative w-full">
+                        <!-- Slider -->
+                        <input type="range" id="slider" min="0" max="30" value="0"
+                            class="w-full h-2 rounded-lg appearance-none bg-gray-300 
+                            [&::-webkit-slider-thumb]:appearance-none 
+                            [&::-webkit-slider-thumb]:w-6 
+                            [&::-webkit-slider-thumb]:h-6 
+                            [&::-webkit-slider-thumb]:bg-orange-500 
+                            [&::-webkit-slider-thumb]:rounded-full 
+                            [&::-webkit-slider-thumb]:cursor-pointer" />
+
+                        <!-- Value Display -->
+                        <div id="sliderValueDisplay" class="absolute top-full mt-2 bg-orange-500 text-white text-xs font-medium px-2 py-1 rounded-md shadow-lg
+                        before:content-[''] before:absolute before:-bottom-[-24px] before:left-1/2 before:-translate-x-1/2 
+                        before:border-[6px] before:border-transparent before:border-b-orange-500">
+                        0
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-gray-700 font-medium">Employee</h2>
+                    <h2 class="text-gray-700 font-medium">MSR Medical Staff</h2>
+                </div>
+                <!-- Total Cost Display -->
+                <div class="flex justify-between items-center bg-orange-500 p-4 rounded-xl shadow-md">
+                    <span class="text-white font-semibold">Total Cost:</span>
+                    <span id="totalCost" class="text-xl font-bold text-white">$0</span>
+                </div>
+            </div>
         </div>
     </div>
-
-    <script type="module" src="./js/logic.js"></script>
-    <script type="module" src="./js/design.js"></script>    
 </body>
+
 </html>
+
+<script type="module" src="./js/logic.js"></script>
+<script type="module" src="./js/design.js"></script>
