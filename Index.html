@@ -9,18 +9,16 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-100 flex justify-center items-center min-h-screen p-8">
-    <div class="flex flex-col md:flex-row gap-8 w-full max-w-6xl">
-        
-        <!-- Left Side (Medical Assistant Cost Comparison) -->
-        <div class="w-2/4 bg-white p-6 rounded-2xl shadow-lg flex flex-col">
-            <h2 class="text-lg font-semibold text-gray-800 mb-4">
+<body class="bg-gray-100 min-h-screen p-24">
+    <div class="flex flex-col md:flex-row gap-8 w-full">
+        <div class="w-full md:w-1/2 bg-white p-6 rounded-2xl shadow-lg flex flex-col space-y-4">
+            <h2 class="text-4xl font-bold text-gray-800 text-center mb-4">
                 Medical Assistant Cost Comparison
             </h2>
             
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table class="w-full text-sm text-left text-gray-500">
-                    <thead class="text-xs text-center text-gray-700 uppercase bg-gray-100">
+                    <thead class="text-xs text-center text-gray-700 uppercase bg-gray-50">
                         <tr>
                             <th scope="col" class="px-6 py-3"></th>
                             <th scope="col" class="px-6 py-3">In-house from MSR Employee</th>
@@ -32,27 +30,82 @@
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 bg-gray-50">
                                 Annual Wage
                             </th>
-                            <td class="px-6 py-4">Silver</td>
-                            <td class="px-6 py-4 bg-gray-50">Laptop</td>
+                            <td class="px-6 py-4">$42,000</td>
+                            <td class="px-6 py-4 bg-gray-50">$0</td>
+                        </tr>
+                        <tr class="border-b text-center">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 bg-gray-50">
+                                Payroll Taxes
+                            </th>
+                            <td class="px-6 py-4">$3,465</td>
+                            <td class="px-6 py-4 bg-gray-50">$0</td>
+                        </tr>
+                        <tr class="border-b text-center">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 bg-gray-50">
+                                Store Unemployment tax
+                            </th>
+                            <td class="px-6 py-4">$1,260</td>
+                            <td class="px-6 py-4 bg-gray-50">$0</td>
+                        </tr>
+                        <tr class="border-b text-center">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 bg-gray-50">
+                                Workers Compensation
+                            </th>
+                            <td class="px-6 py-4">$420</td>
+                            <td class="px-6 py-4 bg-gray-50">$0</td>
+                        </tr>
+                        <tr class="border-b text-center">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 bg-gray-50">
+                                Office space and supplies
+                            </th>
+                            <td class="px-6 py-4">$1,577</td>
+                            <td class="px-6 py-4 bg-gray-50">$0</td>
+                        </tr>
+                        <tr class="border-b text-center">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 bg-gray-50">
+                                Paid Leave
+                            </th>
+                            <td class="px-6 py-4">$2,423</td>
+                            <td class="px-6 py-4 bg-gray-50">$0</td>
+                        </tr>
+                        <tr class="border-b text-center">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 bg-gray-50">
+                                Parking spot
+                            </th>
+                            <td class="px-6 py-4">$183</td>
+                            <td class="px-6 py-4 bg-gray-50">$0</td>
+                        </tr>
+                        <tr class="border-b text-center">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 bg-gray-50">
+                                Insurance
+                            </th>
+                            <td class="px-6 py-4">$5,061</td>
+                            <td class="px-6 py-4 bg-gray-50">$0</td>
+                        </tr>
+                        <tr class="border-b text-white text-center">
+                            <th scope="row" class="px-6 py-4 font-bold bg-orange-500">
+                                TYPICAL FINAL COST
+                            </th>
+                            <td class="px-6 py-4 bg-orange-500 font-bold">$56,389</td>
+                            <td class="px-6 py- bg-orange-500 font-bold">$20,800</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- Right Side (Savings Calculator) -->
-        <div class="w-2/3 bg-white p-6 rounded-2xl shadow-lg">
-            <h1 class="text-xl font-bold text-gray-800 mb-4">Savings Calculator</h1>
+        <div class="w-full md:w-3/4 bg-white p-6 rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold text-white mb-4 text-center bg-orange-500 p-8 rounded-md">Savings Calculator</h1>
 
-            <div class="w-full bg-gray-100 p-6 rounded-2xl shadow-md">
+            <div class="w-full">
                 <!-- Input Slider -->
-                <div class="mb-10">
-                    <label for="slider" class="block text-gray-700 font-medium mb-3">
+                <div class="mb-10 p-4">
+                    <label for="slider" class="block text-gray-700 font-semibold mb-3">
                         Total Hired
                     </label>
                     <div class="relative w-full">
                         <!-- Slider -->
-                        <input type="range" id="slider" min="0" max="30" value="0"
+                        <input type="range" id="slider" min="0" max="50" value="0"
                             class="w-full h-2 rounded-lg appearance-none bg-gray-300 
                             [&::-webkit-slider-thumb]:appearance-none 
                             [&::-webkit-slider-thumb]:w-6 
@@ -61,7 +114,6 @@
                             [&::-webkit-slider-thumb]:rounded-full 
                             [&::-webkit-slider-thumb]:cursor-pointer" />
 
-                        <!-- Value Display -->
                         <div id="sliderValueDisplay" class="absolute top-full mt-2 bg-orange-500 text-white text-xs font-medium px-2 py-1 rounded-md shadow-lg
                         before:content-[''] before:absolute before:-bottom-[-24px] before:left-1/2 before:-translate-x-1/2 
                         before:border-[6px] before:border-transparent before:border-b-orange-500">
@@ -71,13 +123,29 @@
                 </div>
             </div>
 
-            <div class="mt-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-gray-700 font-medium">Employee</h2>
-                    <h2 class="text-gray-700 font-medium">MSR Medical Staff</h2>
+            <div class="mt-6 p-14">
+                <div class="flex justify-between items- gap-24 mb-4 text-center">
+                    <div>
+                        <h2 class="text-gray-700 text-2xl font-medium uppercase">Employee</h2>
+                        <span class="font-bold text-2xl text-orange-500">
+                            $68,283.69
+                        </span>
+                        <p class="uppercase font-thin">per employee</p>
+                    </div>
+
+                    <svg class="w-[48px] h-[48px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 12H5m14 0-4 4m4-4-4-4"/>
+                    </svg>                      
+                    
+                    <div>
+                        <h2 class="text-gray-700 text-2xl font-medium uppercase">MSR Medical Staff</h2>
+                        <span class="font-bold text-2xl text-orange-500">
+                            $23,856.00
+                        </span>
+                        <p class="font-thin uppercase">per va</p>
+                    </div>
                 </div>
-                <!-- Total Cost Display -->
-                <div class="flex justify-between items-center bg-orange-500 p-4 rounded-xl shadow-md">
+                <div class="flex max-w-60 m-auto justify-between items-center bg-orange-500 p-4 rounded-xl shadow-md mt-16">
                     <span class="text-white font-semibold">Total Cost:</span>
                     <span id="totalCost" class="text-xl font-bold text-white">$0</span>
                 </div>
@@ -85,6 +153,7 @@
         </div>
     </div>
 </body>
+
 
 </html>
 
