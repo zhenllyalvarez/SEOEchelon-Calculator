@@ -10,7 +10,11 @@
 </head>
 
 <body class="bg-gray-100 min-h-screen p-24">
-    <div class="flex flex-col md:flex-row gap-8 w-full">
+    <div class="flex justify-center gap-4 mb-6">
+        <button id="btnCommonVA" class="px-6 py-2 bg-orange-500 text-white rounded-lg font-semibold">Common VA</button>
+        <button id="btn12Dollar" class="px-6 py-2 bg-gray-300 text-gray-800 rounded-lg font-semibold"> $12 </button>
+    </div>
+    <div class="flex md:flex-row gap-8 w-full">
         <div class="w-full md:w-1/2 bg-white p-6 rounded-2xl shadow-lg flex flex-col space-y-4">
             <h1 class="text-4xl font-bold text-gray-800 text-center mb-4 uppercase">cost of hiring</h1>
             <h2 class="text-xl font-bold text-gray-700 mb-4">
@@ -43,7 +47,7 @@
                         </tr>
                         <tr class="border-b text-center">
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 bg-gray-50">
-                                Store Unemployment tax (3)
+                                State Unemployment tax (3)
                             </th>
                             <td class="px-6 py-4">$1,260</td>
                             <td class="px-6 py-4 bg-gray-50">$0</td>
@@ -95,7 +99,7 @@
             </div>
         </div>
 
-        <div class="w-full md:w-3/4 bg-white p-6 rounded-2xl shadow-lg">
+        <div id="commonVaSection" class="w-full md:w-3/4 bg-white p-6 rounded-2xl shadow-lg">
             <h1 class="text-4xl font-bold text-white mb-4 text-center bg-orange-500 p-8 rounded-md">Savings Calculator</h1>
             <p class="font-bold text-4xl text-gray-800 text-center">Common VAs</p>
 
@@ -125,6 +129,11 @@
                 </div>
             </div>
 
+            <div class="flex max-w-60 m-auto justify-between items-center bg-orange-500 p-4 rounded-xl shadow-md mt-16">
+                    <span class="text-white font-semibold">Total Cost:</span>
+                    <span id="totalCost" class="text-xl font-bold text-white">$0</span>
+            </div>
+
             <div class="mt-6 p-14">
                 <div class="flex justify-between items- gap-24 mb-4 text-center">
                     <div>
@@ -135,7 +144,7 @@
                         <p class="uppercase font-thin">per employee</p>
                     </div>
 
-                    <svg class="w-[48px] h-[48px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <svg class="w-[48px] h-[48px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 12H5m14 0-4 4m4-4-4-4"/>
                     </svg>                      
                     
@@ -147,12 +156,66 @@
                         <p class="font-thin uppercase">per va</p>
                     </div>
                 </div>
-                <div class="flex max-w-60 m-auto justify-between items-center bg-orange-500 p-4 rounded-xl shadow-md mt-16">
-                    <span class="text-white font-semibold">Total Cost:</span>
-                    <span id="totalCost" class="text-xl font-bold text-white">$0</span>
+            </div>
+        </div>
+
+        <!-- another type of calculation -->
+        <div id="twelveDollarSection" class="w-full md:w-3/4 bg-white p-6 rounded-2xl shadow-lg hidden">
+            <h1 class="text-4xl font-bold text-white mb-4 text-center bg-orange-500 p-8 rounded-md">Savings Calculator</h1>
+            <p class="font-bold text-4xl text-gray-800 text-center">$12</p>
+
+            <div class="w-full">
+                <!-- Input Slider -->
+                <div class="mb-10 p-4">
+                    <label for="slider12" class="block text-gray-700 font-semibold mb-3">
+                        Total Hired
+                    </label>
+                    <div class="relative w-full">
+                        <!-- Slider -->
+                        <input type="range" id="slider" min="0" max="50" value="0"
+                            class="w-full h-2 rounded-lg appearance-none bg-gray-300 
+                            [&::-webkit-slider-thumb]:appearance-none 
+                            [&::-webkit-slider-thumb]:w-6 
+                            [&::-webkit-slider-thumb]:h-6 
+                            [&::-webkit-slider-thumb]:bg-orange-500 
+                            [&::-webkit-slider-thumb]:rounded-full 
+                            [&::-webkit-slider-thumb]:cursor-pointer" />
+
+                        <div id="sliderValueDisplay" class="absolute top-full mt-2 bg-orange-500 text-white text-xs font-medium px-2 py-1 rounded-md shadow-lg
+                        before:content-[''] before:absolute before:-bottom-[-24px] before:left-1/2 before:-translate-x-1/2 
+                        before:border-[6px] before:border-transparent before:border-b-orange-500">
+                        0
+                    </div>
+                    </div>
                 </div>
-                <div>
-                    <button>medical billing & bilingual</button>
+            </div>
+
+            <div class="flex max-w-60 m-auto justify-between items-center bg-orange-500 p-4 rounded-xl shadow-md mt-16">
+                    <span class="text-white font-semibold">Total Cost:</span>
+                    <span id="sliderValueDisplay12" class="text-xl font-bold text-white">$0</span>
+            </div>
+
+            <div class="mt-6 p-14">
+                <div class="flex justify-between items- gap-24 mb-4 text-center">
+                    <div>
+                        <h2 class="text-gray-700 text-2xl font-medium uppercase">Employee</h2>
+                        <span class="font-bold text-2xl text-orange-500">
+                            $68,283.69
+                        </span>
+                        <p class="uppercase font-thin">per employee</p>
+                    </div>
+
+                    <svg class="w-[48px] h-[48px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 12H5m14 0-4 4m4-4-4-4"/>
+                    </svg>                      
+                    
+                    <div>
+                        <h2 class="text-gray-700 text-2xl font-medium uppercase">MSR Medical Staff</h2>
+                        <span class="font-bold text-2xl text-orange-500">
+                            $23,856.00
+                        </span>
+                        <p class="font-thin uppercase">per va</p>
+                    </div>
                 </div>
             </div>
         </div>
