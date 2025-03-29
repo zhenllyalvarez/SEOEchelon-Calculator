@@ -1,10 +1,19 @@
-import { calculateTotal, costOfHiringTotal } from './logic.js';
+import { calculateTotal } from './logic.js';
 
 const slider = document.getElementById('slider');
 const totalCost = document.getElementById('totalCost');
+const totalCostIfNotVA = document.getElementById('totalCostIfNotVA');
 const annualCost = document.getElementById('FTAnnual');
 const Awage = document.getElementById('AnnualWage');
-const AnnualWageVA = document.getElementById('AnnualWageVA');
+const AwageVA = document.getElementById('AnnualWageVA');
+const AwageAlltotalValue = document.getElementById('totalValueInVA');
+const PayrollTaxes = document.getElementById('PayrollTaxes');
+const Sut = document.getElementById('SUT');
+const WorkersCompensation = document.getElementById('WorkersCompensation');
+const Osas = document.getElementById('OSAS');
+const PaidLeave = document.getElementById('PaidLeave');
+const ParkingSpot = document.getElementById('ParkingSpot');
+const Insurance = document.getElementById('Insurance');
 const medicalVA = document.getElementById('medicalVA');
 const sliderValueDisplay = document.getElementById('sliderValueDisplay');
 const sliderDisplay2 = document.getElementById('sliderValueDisplay2');
@@ -13,28 +22,41 @@ const btn12Dollar = document.getElementById('btn12Dollar');
 const commonVaSection = document.getElementById('commonVaSection');
 const twelveDollarSection = document.getElementById('twelveDollarSection');
 
-function updateUI(value) {
+function updateUI(value, isVA = false) {
     const cost = calculateTotal(value);
     totalCost.innerText = `$${cost}`;
 
-    const annualValue = calculateTotal(value, true);
-    annualCost.innerText = `$${annualValue.toLocaleString()}`;
+    const annualValues = calculateTotal(value, true, isVA);
 
-    if (Awage) {
-        const wageValue = calculateTotal(value, true);
-        Awage.innerText = `$${wageValue.toLocaleString()}`;
+
+    if (typeof annualValues === 'object') {
+        annualCost.innerText = `$${annualValues.annualWage.toLocaleString()}`;
+        if (Awage) Awage.innerText = `$${annualValues.annualWage.toLocaleString()}`;
+        if (PayrollTaxes) PayrollTaxes.innerText = `$${annualValues.payrollTaxes.toLocaleString()}`;
+        if (Sut) Sut.innerText = `$${annualValues.stateUnemploymentTax.toLocaleString()}`;
+        if (WorkersCompensation) WorkersCompensation.innerText = `$${annualValues.workersComp.toLocaleString()}`;
+        if (Osas) Osas.innerText = `$${annualValues.officeSupplies.toLocaleString()}`;
+        if (PaidLeave) PaidLeave.innerText = `$${annualValues.paidLeave.toLocaleString()}`;
+        if (ParkingSpot) ParkingSpot.innerText = `$${annualValues.parkingSpot.toLocaleString()}`;
+        if (Insurance) Insurance.innerText = `$${annualValues.insurance.toLocaleString()}`;
     }
 
-    if(medicalVA) {
-        const vaCost = costOfHiringTotal(value, true);
-        medicalVA.innerText = `$${vaCost.toLocaleString()}`;
+    if(totalCostIfNotVA) {
+        totalCostIfNotVA.innerText = `$${annualValues.totalCost.toLocaleString()}`;
+    }
+
+    if (medicalVA) {
+        const vaCost = calculateTotal(value, true, true);
+        medicalVA.innerText = `$${vaCost.annualWage.toLocaleString()}`;
+        AwageVA.innerText = `$${vaCost.annualWage.toLocaleString()}`;
+        AwageAlltotalValue.innerText = `$${vaCost.annualWage.toLocaleString()}`;
     }
 
     const percent = (value / slider.max) * 100;
     slider.style.background = `linear-gradient(to right, #189DA4 ${percent}%, #E5E7EB ${percent}%)`;
-    
+
     const sliderRect = slider.getBoundingClientRect();
-    const thumbWidth = 24; 
+    const thumbWidth = 24;
     const thumbOffset = (percent / 100) * (sliderRect.width - thumbWidth);
 
     sliderValueDisplay.style.left = `${thumbOffset + thumbWidth / 2 - sliderValueDisplay.offsetWidth / 2}px`;
@@ -66,5 +88,3 @@ btn12Dollar.addEventListener('click', () => {
     btnCommonVA.classList.add('bg-[#5EB3B7]', 'text-gray-100');
     btnCommonVA.classList.remove('bg-[#189DA4]', 'text-white');
 });
-
-
