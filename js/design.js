@@ -20,7 +20,9 @@ const sliderDisplay2 = document.getElementById('sliderValueDisplay2');
 const btnCommonVA = document.getElementById('btnCommonVA');
 const btn12Dollar = document.getElementById('btn12Dollar');
 const commonVaSection = document.getElementById('commonVaSection');
+const commonVaSectionTable = document.getElementById('commonVaSectionTable');
 const twelveDollarSection = document.getElementById('twelveDollarSection');
+const twelveDollarSectionTable = document.getElementById('twelveDollarSectionTable');
 
 function updateUI(value, isVA = false) {
     const cost = calculateTotal(value);
@@ -69,7 +71,9 @@ slider.addEventListener('input', () => updateUI(slider.value));
 
 btnCommonVA.addEventListener('click', () => {
     commonVaSection.classList.remove('hidden');
+    commonVaSectionTable.classList.remove('hidden');
     twelveDollarSection.classList.add('hidden');
+    twelveDollarSectionTable.classList.add('hidden');
 
     btnCommonVA.classList.add('bg-[#189DA4]', 'text-white');
     btnCommonVA.classList.remove('bg-[#5EB3B7]', 'text-gray-100');
@@ -80,7 +84,9 @@ btnCommonVA.addEventListener('click', () => {
 
 btn12Dollar.addEventListener('click', () => {
     twelveDollarSection.classList.remove('hidden');
+    twelveDollarSectionTable.classList.remove('hidden');
     commonVaSection.classList.add('hidden');
+    commonVaSectionTable.classList.add('hidden');
 
     btn12Dollar.classList.add('bg-[#189DA4]', 'text-white');
     btn12Dollar.classList.remove('bg-[#5EB3B7]', 'text-gray-100');
