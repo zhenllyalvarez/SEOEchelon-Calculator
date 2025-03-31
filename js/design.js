@@ -2,6 +2,7 @@ import { calculateTotal } from './logic.js';
 
     const slider = document.getElementById('slider');
     const totalCost = document.getElementById('totalCost');
+    const totalCostBilingual = document.getElementById('totalCostBilingual');
     const totalCostIfNotVA = document.getElementById('totalCostIfNotVA');
     const annualCost = document.getElementById('FTAnnual');
     const Awage = document.getElementById('AnnualWage');
@@ -15,6 +16,7 @@ import { calculateTotal } from './logic.js';
     const ParkingSpot = document.getElementById('ParkingSpot');
     const Insurance = document.getElementById('Insurance');
     const medicalVA = document.getElementById('medicalVA');
+    const bilingualMedicalVA = document.getElementById('bilingualMedicalVA');
     const sliderValueDisplay = document.getElementById('sliderValueDisplay');
     const sliderDisplay2 = document.getElementById('sliderValueDisplay2');
     const btnCommonVA = document.getElementById('btnCommonVA');
@@ -23,6 +25,19 @@ import { calculateTotal } from './logic.js';
     const twelveDollarSection = document.getElementById('twelveDollarSection');
     const slider12 = document.getElementById('slider12');
     const sliderValueDisplay12 = document.getElementById('sliderValueDisplay12');
+    const sliderValueDisplay2Bilingual = document.getElementById('sliderValueDisplay2Bilingual');
+    const AnnualWageVABilingual = document.getElementById('AnnualWageVABilingual');
+    const totalValueInVABilingual = document.getElementById('totalValueInVABilingual');
+    const BilingualVAInHouse = document.getElementById('BilingualVAInHouse');
+    const PayrollTaxesBilingual = document.getElementById('PayrollTaxesBilingual');
+    const AnnualWageBilingual = document.getElementById('AnnualWageBilingual');
+    const SUTBilingual = document.getElementById('SUTBilingual');
+    const WorkersCompensationBilingual = document.getElementById('WorkersCompensationBilingual');
+    const OSASBilingual = document.getElementById('OSASBilingual');
+    const PaidLeaveBilingual = document.getElementById('PaidLeaveBilingual');
+    const ParkingSpotBilingual = document.getElementById('ParkingSpotBilingual');
+    const InsuranceBilingual = document.getElementById('InsuranceBilingual');
+    const totalCostIfNotVABilingual = document.getElementById('totalCostIfNotVABilingual');
 
     updateSlider12UI(slider12.value);
     slider12.addEventListener('input', () => updateSlider12UI(slider12.value));
@@ -31,7 +46,7 @@ import { calculateTotal } from './logic.js';
         const cost = calculateTotal(value);
         totalCost.innerText = `$${cost}`;
 
-        const annualValues = calculateTotal(value, true, isVA);
+        const annualValues = calculateTotal(value, true, isVA, false);
 
         if (typeof annualValues === 'object') {
             annualCost.innerText = `$${annualValues.annualWage.toLocaleString()}`;
@@ -50,7 +65,7 @@ import { calculateTotal } from './logic.js';
         }
 
         if (medicalVA) {
-            const vaCost = calculateTotal(value, true, true);
+            const vaCost = calculateTotal(value, true, true, false);
             medicalVA.innerText = `$${vaCost.annualWage.toLocaleString()}`;
             AwageVA.innerText = `$${vaCost.annualWage.toLocaleString()}`;
             AwageAlltotalValue.innerText = `$${vaCost.annualWage.toLocaleString()}`;
@@ -69,6 +84,38 @@ import { calculateTotal } from './logic.js';
     }
 
     function updateSlider12UI(value) {
+        const cost = calculateTotal(value, false, false, true);
+        totalCostBilingual.innerText = `$${cost.totalCost.toLocaleString()}`;
+
+        const annualValues = calculateTotal(value, true, false, false);
+
+        if (typeof annualValues === 'object') {
+            BilingualVAInHouse.innerText = `$${annualValues.annualWage.toLocaleString()}`;
+            if(AnnualWageBilingual) AnnualWageBilingual.innerText = `$${annualValues.annualWage.toLocaleString()}`;
+            if(PayrollTaxesBilingual) PayrollTaxesBilingual.innerText = `$${annualValues.payrollTaxes.toLocaleString()}`;
+            if(SUTBilingual) SUTBilingual.innerText = `$${annualValues.stateUnemploymentTax.toLocaleString()}`;
+            if(WorkersCompensationBilingual) WorkersCompensationBilingual.innerText = `$${annualValues.workersComp.toLocaleString()}`;
+            if(OSASBilingual) OSASBilingual.innerText = `$${annualValues.officeSupplies.toLocaleString()}`;
+            if(PaidLeaveBilingual) PaidLeaveBilingual.innerText = `$${annualValues.paidLeave.toLocaleString()}`;
+            if(ParkingSpotBilingual) ParkingSpotBilingual.innerText = `$${annualValues.parkingSpot.toLocaleString()}`;
+            if(InsuranceBilingual) InsuranceBilingual.innerText = `$${annualValues.insurance.toLocaleString()}`;
+        }
+
+        if(totalCostIfNotVABilingual) {
+            totalCostIfNotVABilingual.innerText = `$${annualValues.totalCost.toLocaleString()}`;
+        }
+
+        if (bilingualMedicalVA) {
+            const vaBilingualCost = calculateTotal(value, true, false, true);
+
+            // Ensure we're accessing the correct property
+            bilingualMedicalVA.innerText = `$${vaBilingualCost.annualWage.toLocaleString()}`;
+            AnnualWageVABilingual.innerText = `$${vaBilingualCost.annualWage.toLocaleString()}`;
+            totalValueInVABilingual.innerText = `$${vaBilingualCost.annualWage.toLocaleString()}`;
+        }
+        console.log("Bilingual VA Cost:", calculateTotal(value, true, false, true));
+
+
         const percent = (value / slider12.max) * 100;
         slider12.style.background = `linear-gradient(to right, #189DA4 ${percent}%, #E5E7EB ${percent}%)`;
 
@@ -78,6 +125,7 @@ import { calculateTotal } from './logic.js';
 
         sliderValueDisplay12.style.left = `${thumbOffset + thumbWidth / 2 - sliderValueDisplay12.offsetWidth / 2}px`;
         sliderValueDisplay12.innerText = value;
+        sliderValueDisplay2Bilingual.innerText = value;
     }
 
     updateUI(slider.value);

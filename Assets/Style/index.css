@@ -5,3 +5,13 @@
 .txt {
     color: #189DA4;
 }
+
+@media (max-width: 768px) {
+    .responsive-table {
+        font-size: 0.875rem; /* 14px */
+    }
+    .responsive-table th, 
+    .responsive-table td {
+        padding: 0.5rem 0.25rem; /* Reduced padding */
+    }
+}
