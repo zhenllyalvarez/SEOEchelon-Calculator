@@ -108,7 +108,6 @@ import { calculateTotal } from './logic.js';
         if (bilingualMedicalVA) {
             const vaBilingualCost = calculateTotal(value, true, false, true);
 
-            // Ensure we're accessing the correct property
             bilingualMedicalVA.innerText = `$${vaBilingualCost.annualWage.toLocaleString()}`;
             AnnualWageVABilingual.innerText = `$${vaBilingualCost.annualWage.toLocaleString()}`;
             totalValueInVABilingual.innerText = `$${vaBilingualCost.annualWage.toLocaleString()}`;

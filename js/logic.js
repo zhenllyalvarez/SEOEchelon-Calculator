@@ -1,9 +1,9 @@
 export function calculateTotal(hired, isAnnual = false, isVA = false, isBilingual = false) {
     function getTotalPricePerHour(count) {
         const rates = [
-            { threshold: 20, rate: 9 },     // 21+ hires get $9/hour
-            { threshold: 10, rate: 9.50 },  // 11-20 hires get $9.50/hour
-            { threshold: 0, rate: 10 }      // 1-10 hires get $10/hour
+            { threshold: 20, rate: 9 },
+            { threshold: 10, rate: 9.50 },
+            { threshold: 0, rate: 10 }
         ];
         
         let total = 0;
@@ -18,9 +18,9 @@ export function calculateTotal(hired, isAnnual = false, isVA = false, isBilingua
     
     function getBilingualTotalPrice(count) {
         const rates = [
-            { threshold: 20, rate: 11 },    // 21+ hires get $11 each
-            { threshold: 10, rate: 11.50 }, // 11-20 hires get $11.50 each
-            { threshold: 0, rate: 12 }      // 1-10 hires get $12 each
+            { threshold: 20, rate: 11 },
+            { threshold: 10, rate: 11.50 },
+            { threshold: 0, rate: 12 }
         ];
         
         let total = 0;
@@ -34,28 +34,28 @@ export function calculateTotal(hired, isAnnual = false, isVA = false, isBilingua
     }
     
     if (isBilingual) {
-        const hourlyWage = getBilingualTotalPrice(hired); // Get total hourly wage
-        const annualWage = hourlyWage * 2080; // Convert to annual
+        const hourlyWage = getBilingualTotalPrice(hired);
+        const annualWage = hourlyWage * 2080;
     
         return {
-            annualWage,          // Annual wage (correct for UI)
-            totalCost: hourlyWage // Hourly total cost instead of annual
+            annualWage,
+            totalCost: hourlyWage
         };
     }
     
     
     if (!isAnnual) return getTotalPricePerHour(hired);
     
-    const hoursPerYear = 2080; // 40 hours per week * 52 weeks
+    const hoursPerYear = 2080;
     let totalAnnualWage = 0;
     
     for (let i = 1; i <= hired; i++) {
-        let hourlyRate = 10; // Default rate for first 10 hires
+        let hourlyRate = 10;
 
         if (i > 20) {
-            hourlyRate = 9; // Beyond 20 hires
+            hourlyRate = 9;
         } else if (i > 10) {
-            hourlyRate = 9.50; // 11-20 hires
+            hourlyRate = 9.50;
         }
         
         totalAnnualWage += hourlyRate * hoursPerYear;
@@ -83,7 +83,7 @@ export function calculateTotal(hired, isAnnual = false, isVA = false, isBilingua
             paidLeave,
             parkingSpot,
             insurance,
-            totalCost // New total cost field
+            totalCost
         };
     }
     
@@ -96,6 +96,6 @@ export function calculateTotal(hired, isAnnual = false, isVA = false, isBilingua
         paidLeave: 0,
         parkingSpot: 0,
         insurance: 0,
-        totalCost: totalAnnualWage // VA total cost is just the wage
+        totalCost: totalAnnualWage
     };
 }
