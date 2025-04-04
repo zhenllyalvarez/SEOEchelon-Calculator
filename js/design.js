@@ -1,6 +1,5 @@
 import { calculateTotal } from './logic.js';
 
-// DOM Elements
 const elements = {
   slider: document.getElementById('slider'),
   totalCost: document.getElementById('totalCost'),
@@ -44,14 +43,12 @@ const elements = {
   btn12DollarBilingual: document.getElementById('btn12DollarBilingual')
 };
 
-// Responsive breakpoints
 const breakpoints = {
   mobile: 640,
   tablet: 768,
   desktop: 1024
 };
 
-// Initialize
 function init() {
   updateUI(elements.slider.value);
   updateSlider12UI(elements.slider12.value);
@@ -70,10 +67,8 @@ function setupEventListeners() {
 }
 
 function setupResponsiveBehavior() {
-  // Initial check
   handleResponsiveChanges();
   
-  // Add resize listener with debounce
   let resizeTimeout;
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimeout);
@@ -84,7 +79,6 @@ function setupResponsiveBehavior() {
 function handleResponsiveChanges() {
   const width = window.innerWidth;
   
-  // Adjust slider display for mobile
   if (width < breakpoints.tablet) {
     document.querySelectorAll('.slider-value-display').forEach(display => {
       display.style.fontSize = '12px';
@@ -96,14 +90,12 @@ function handleResponsiveChanges() {
       display.style.padding = '';
     });
   }
-  
-  // Recalculate slider positions
+
   updateSliderDisplay(elements.slider, elements.sliderValueDisplay, elements.sliderDisplay2, elements.slider.value);
   updateSliderDisplay(elements.slider12, elements.sliderValueDisplay12, elements.sliderValueDisplay2Bilingual, elements.slider12.value);
 }
 
 function updateUI(value, isVA = false) {
-  // Update all cost calculations
   const cost = calculateTotal(value);
   elements.totalCost.textContent = `$${cost}`;
 
@@ -134,7 +126,6 @@ function updateUI(value, isVA = false) {
 }
 
 function updateSlider12UI(value) {
-  // Update all bilingual cost calculations
   const cost = calculateTotal(value, false, false, true);
   elements.totalCostBilingual.textContent = `$${cost.totalCost.toLocaleString()}`;
 
@@ -177,12 +168,10 @@ function updateSliderDisplay(sliderElement, displayElement, displayElement2, val
   const sliderRect = sliderElement.getBoundingClientRect();
   const thumbWidth = 24;
   const thumbOffset = (percent / 100) * (sliderRect.width - thumbWidth);
-  
-  // Update display text
+
   displayElement.textContent = value;
   if (displayElement2) displayElement2.textContent = value;
-  
-  // Position display (responsive)
+
   if (window.innerWidth < breakpoints.tablet) {
     displayElement.style.left = `${thumbOffset}px`;
     displayElement.style.transform = 'none';
@@ -190,8 +179,7 @@ function updateSliderDisplay(sliderElement, displayElement, displayElement2, val
     displayElement.style.left = '';
     displayElement.style.transform = `translateX(${thumbOffset}px)`;
   }
-  
-  // Update slider background (same color scheme for both sliders)
+
   let background;
   if (value <= 10) {
     background = `linear-gradient(to right, #869874 0% ${percent}%, #E5E7EB ${percent}% 100%)`;
@@ -240,5 +228,4 @@ function toggleButtonStyles(isFullTime) {
   });
 }
 
-// Initialize the app
 document.addEventListener('DOMContentLoaded', init);
