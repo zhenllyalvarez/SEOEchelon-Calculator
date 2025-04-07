@@ -49,13 +49,6 @@ const breakpoints = {
   desktop: 1024
 };
 
-function init() {
-  updateUI(elements.slider.value);
-  updateSlider12UI(elements.slider12.value);
-  setupEventListeners();
-  setupResponsiveBehavior();
-}
-
 function setupEventListeners() {
   elements.slider.addEventListener('input', () => updateUI(elements.slider.value));
   elements.slider12.addEventListener('input', () => updateSlider12UI(elements.slider12.value));
@@ -152,7 +145,7 @@ function updateSlider12UI(value) {
     updateElementText(elements.totalValueInVABilingual, vaBilingualCost.annualWage);
   }
 
-  updateSliderDisplay(elements.slider12, elements.sliderValueDisplay12, elements.sliderValueDisplay2Bilingual, value);
+  updateSliderDisplay(elements.slider12, elements.sliderValueDisplay12, elements.sliderValueDisplay2Bilingual, value, true);
 }
 
 function updateElementText(element, value) {
@@ -167,7 +160,7 @@ function updateSliderDisplay(sliderElement, displayElement, displayElement2, val
   const percent = value;
   const sliderRect = sliderElement.getBoundingClientRect();
   const thumbWidth = 24;
-  const thumbOffset = (percent / 100) * (sliderRect.width - thumbWidth);
+  const thumbOffset = (percent / 40) * (sliderRect.width - thumbWidth);  // Changed to use 40 as max
 
   displayElement.textContent = value;
   if (displayElement2) displayElement2.textContent = value;
@@ -182,11 +175,11 @@ function updateSliderDisplay(sliderElement, displayElement, displayElement2, val
 
   let background;
   if (value <= 10) {
-    background = `linear-gradient(to right, #869874 0% ${percent}%, #E5E7EB ${percent}% 100%)`;
+    background = `linear-gradient(to right, #869874 0% ${(percent/40)*100}%, #E5E7EB ${(percent/40)*100}% 100%)`;
   } else if (value <= 20) {
-    background = `linear-gradient(to right, #869874 0% 11%, #E6B705 11% ${percent}%, #E5E7EB ${percent}% 100%)`;
+    background = `linear-gradient(to right, #869874 0% ${(10/40)*100}%, #E6B705 ${(10/40)*100}% ${(percent/40)*100}%, #E5E7EB ${(percent/40)*100}% 100%)`;
   } else {
-    background = `linear-gradient(to right, #869874 0% 11%, #E6B705 11% 21%, #A5111F 21% ${percent}%, #E5E7EB ${percent}% 100%)`;
+    background = `linear-gradient(to right, #869874 0% ${(10/40)*100}%, #E6B705 ${(10/40)*100}% ${(20/40)*100}%, #A5111F ${(20/40)*100}% ${(percent/40)*100}%, #E5E7EB ${(percent/40)*100}% 100%)`;
   }
   sliderElement.style.background = background;
 }
@@ -226,6 +219,13 @@ function toggleButtonStyles(isFullTime) {
     btn.classList.add(...inactiveClass);
     btn.classList.remove(...activeClass);
   });
+}
+
+function init() {
+  updateUI(elements.slider.value);
+  updateSlider12UI(elements.slider12.value);
+  setupEventListeners();
+  setupResponsiveBehavior();
 }
 
 document.addEventListener('DOMContentLoaded', init);
