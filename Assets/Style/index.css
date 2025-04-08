@@ -2,6 +2,16 @@
     background: #189DA4;
 }
 
+.savingsCalcu {
+    background-color: #C0E3E5;
+    border: 2px solid transparent;
+}
+
+.savingsCalcu:hover {
+    border: 2px solid #189DA4;
+    background-color: white;
+}
+
 .txt {
     color: #189DA4;
 }
