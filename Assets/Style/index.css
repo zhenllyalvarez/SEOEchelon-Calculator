@@ -16,31 +16,68 @@
     color: #189DA4;
 }
 
+/* Slider track background styles */
+input[type="range"] {
+    background: linear-gradient(to right, 
+        #869874 0%, #869874 25%,    /* Tier 1: Green */
+        #E6B705 25%, #E6B705 50%,   /* Tier 2: Yellow */
+        #A5111F 50%, #A5111F 75%,   /* Tier 3: Red */
+        #ccc 75%, #ccc 100%         /* Rest: Gray */
+    );
+}
+
+/* Slider thumb styles */
+input[type="range"]::-webkit-slider-thumb {
+    background-color: #189DA4 !important;
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
 .slider-tick {
     position: relative;
     font-size: 14px;
     color: #333;
     text-align: center;
-    width: 12px;
+    transform: translateX(-50%);
+    margin-top: 8px;
 }
 
 .slider-tick::before {
     content: '';
     position: absolute;
-    bottom: 16px;
-    left: 40%;
-    transform: translateX(-40%);
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
     width: 2px;
     height: 22px;
     background: #189DA4;
 }
 
+/* Tier label styles */
+.tier-label {
+    padding: 8px 16px;
+    border-radius: 4px;
+    color: white;
+    font-weight: 600;
+}
+
+.tier-1 {
+    background-color: #869874;  /* Green */
+}
+
+.tier-2 {
+    background-color: #E6B705;  /* Yellow */
+}
+
+.tier-3 {
+    background-color: #A5111F;  /* Red */
+}
+
 @media (max-width: 768px) {
     .responsive-table {
-        font-size: 0.875rem; /* 14px */
+        font-size: 0.875rem;
     }
     .responsive-table th, 
     .responsive-table td {
-        padding: 0.5rem 0.25rem; /* Reduced padding */
+        padding: 0.5rem 0.25rem;
     }
 }

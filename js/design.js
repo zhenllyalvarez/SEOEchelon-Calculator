@@ -40,7 +40,13 @@ const elements = {
   InsuranceBilingual: document.getElementById('InsuranceBilingual'),
   totalCostIfNotVABilingual: document.getElementById('totalCostIfNotVABilingual'),
   btnCommonVABilingual: document.getElementById('btnCommonVABilingual'),
-  btn12DollarBilingual: document.getElementById('btn12DollarBilingual')
+  btn12DollarBilingual: document.getElementById('btn12DollarBilingual'),
+  dropdownRadioHelper: document.getElementById('dropdownRadioHelper'),
+  dropdownInformation2: document.getElementById('dropdownInformation2'),
+  tierLabel: document.getElementById('tierLabel'),
+  tierPrice: document.getElementById('tierPrice'),
+  ftTierLabel: document.getElementById('ftTierLabel'),
+  ftTierPrice: document.getElementById('ftTierPrice'),
 };
 
 const breakpoints = {
@@ -49,14 +55,112 @@ const breakpoints = {
   desktop: 1024
 };
 
+// Track dropdown states
+let dropdownStates = {
+  fullTimeVA: false,
+  bilingualVA: false
+};
+
 function setupEventListeners() {
   elements.slider.addEventListener('input', () => updateUI(elements.slider.value));
   elements.slider12.addEventListener('input', () => updateSlider12UI(elements.slider12.value));
 
-  elements.btnCommonVA.addEventListener('click', toggleToFullTime);
-  elements.btnCommonVABilingual.addEventListener('click', toggleToFullTime);
-  elements.btn12Dollar.addEventListener('click', toggleToBilingual);
-  elements.btn12DollarBilingual.addEventListener('click', toggleToBilingual);
+  // Update event listeners for dropdown toggle behavior
+  elements.btnCommonVA.addEventListener('click', () => toggleDropdown('fullTimeVA'));
+  elements.btnCommonVABilingual.addEventListener('click', () => toggleDropdown('fullTimeVA'));
+  elements.btn12Dollar.addEventListener('click', () => toggleDropdown('bilingualVA'));
+  elements.btn12DollarBilingual.addEventListener('click', () => toggleDropdown('bilingualVA'));
+}
+
+function toggleDropdown(type) {
+  if (type === 'fullTimeVA') {
+    elements.commonVaSection.classList.remove('hidden');
+    elements.twelveDollarSection.classList.add('hidden');
+    
+    dropdownStates.fullTimeVA = !dropdownStates.fullTimeVA;
+    if (dropdownStates.fullTimeVA) {
+      const actualHeight = elements.dropdownRadioHelper.scrollHeight + 'px';
+      elements.dropdownRadioHelper.style.maxHeight = actualHeight;
+      elements.dropdownRadioHelper.style.opacity = '1';
+      elements.dropdownRadioHelper.classList.add('show');
+      elements.dropdownRadioHelper.parentElement.classList.add('bg-white');
+      elements.dropdownInformation2.style.maxHeight = '0';
+      elements.dropdownInformation2.style.opacity = '0';
+    } else {
+      elements.dropdownRadioHelper.style.maxHeight = '0';
+      elements.dropdownRadioHelper.style.opacity = '0';
+      elements.dropdownRadioHelper.classList.remove('show');
+      elements.dropdownRadioHelper.parentElement.classList.remove('bg-white');
+      // Automatically show bilingual section when full-time VA is closed
+      setTimeout(() => {
+        elements.twelveDollarSection.classList.remove('hidden');
+        elements.commonVaSection.classList.add('hidden');
+        const bilingualHeight = elements.dropdownInformation2.scrollHeight + 'px';
+        elements.dropdownInformation2.style.maxHeight = bilingualHeight;
+        elements.dropdownInformation2.style.opacity = '1';
+        elements.dropdownInformation2.classList.add('show');
+        elements.dropdownInformation2.parentElement.classList.add('bg-white');
+        dropdownStates.bilingualVA = true;
+      }, 400); // Add a delay for smoother transition
+    }
+    
+    elements.dropdownInformation2.classList.remove('show');
+    elements.dropdownInformation2.parentElement.classList.remove('bg-white');
+    dropdownStates.bilingualVA = false;
+    
+    toggleButtonStyles(true);
+    updateExpandCollapseIcon(elements.btnCommonVA, dropdownStates.fullTimeVA);
+    updateExpandCollapseIcon(elements.btnCommonVABilingual, dropdownStates.fullTimeVA);
+    updateExpandCollapseIcon(elements.btn12Dollar, false);
+    updateExpandCollapseIcon(elements.btn12DollarBilingual, false);
+  } else {
+    elements.twelveDollarSection.classList.remove('hidden');
+    elements.commonVaSection.classList.add('hidden');
+    
+    dropdownStates.bilingualVA = !dropdownStates.bilingualVA;
+    if (dropdownStates.bilingualVA) {
+      const actualHeight = elements.dropdownInformation2.scrollHeight + 'px';
+      elements.dropdownInformation2.style.maxHeight = actualHeight;
+      elements.dropdownInformation2.style.opacity = '1';
+      elements.dropdownInformation2.classList.add('show');
+      elements.dropdownInformation2.parentElement.classList.add('bg-white');
+    } else {
+      elements.dropdownInformation2.style.maxHeight = '0';
+      elements.dropdownInformation2.style.opacity = '0';
+      elements.dropdownInformation2.classList.remove('show');
+      elements.dropdownInformation2.parentElement.classList.remove('bg-white');
+    }
+    
+    elements.dropdownRadioHelper.style.maxHeight = '0';
+    elements.dropdownRadioHelper.style.opacity = '0';
+    elements.dropdownRadioHelper.classList.remove('show');
+    elements.dropdownRadioHelper.parentElement.classList.remove('bg-white');
+    dropdownStates.fullTimeVA = false;
+    
+    toggleButtonStyles(false);
+    updateExpandCollapseIcon(elements.btn12Dollar, dropdownStates.bilingualVA);
+    updateExpandCollapseIcon(elements.btn12DollarBilingual, dropdownStates.bilingualVA);
+    updateExpandCollapseIcon(elements.btnCommonVA, false);
+    updateExpandCollapseIcon(elements.btnCommonVABilingual, false);
+  }
+}
+
+function updateExpandCollapseIcon(button, isExpanded) {
+  // Find the SVG element inside the button
+  const svg = button.querySelector('svg');
+  if (!svg) return;
+  
+  // Update the path for expand/collapse icon
+  const path = svg.querySelector('path');
+  if (path) {
+    if (isExpanded) {
+      // Minus icon (collapse)
+      path.setAttribute('d', 'M5 12h14');
+    } else {
+      // Plus icon (expand)
+      path.setAttribute('d', 'M5 12h14m-7 7V5');
+    }
+  }
 }
 
 function setupResponsiveBehavior() {
@@ -88,11 +192,14 @@ function handleResponsiveChanges() {
   updateSliderDisplay(elements.slider12, elements.sliderValueDisplay12, elements.sliderValueDisplay2Bilingual, elements.slider12.value);
 }
 
-function updateUI(value, isVA = false) {
+function updateUI(value) {
   const cost = calculateTotal(value);
   elements.totalCost.textContent = `$${cost}`;
 
-  const annualValues = calculateTotal(value, true, isVA, false);
+  // Update tier labels based on slider value
+  updateFTTierLabels(value);
+
+  const annualValues = calculateTotal(value, true, false, false);
 
   if (typeof annualValues === 'object') {
     updateElementText(elements.annualCost, annualValues.totalCost);
@@ -122,6 +229,9 @@ function updateSlider12UI(value) {
   const cost = calculateTotal(value, false, false, true);
   elements.totalCostBilingual.textContent = `$${cost.totalCost.toLocaleString()}`;
 
+  // Update tier labels based on slider value
+  updateTierLabels(value);
+
   const annualValues = calculateTotal(value, true, false, false);
 
   if (typeof annualValues === 'object') {
@@ -148,6 +258,48 @@ function updateSlider12UI(value) {
   updateSliderDisplay(elements.slider12, elements.sliderValueDisplay12, elements.sliderValueDisplay2Bilingual, value, true);
 }
 
+function updateTierLabels(value) {
+  if (value <= 10) {
+    elements.tierLabel.textContent = 'Tier 1 (1-10)';
+    elements.tierPrice.textContent = '$12/hr';
+    elements.tierLabel.style.color = '#39660b';
+    elements.tierPrice.style.color = '#39660b';
+    elements.tierLabel.style.fontWeight = '900';
+    elements.tierPrice.style.fontWeight = '900';
+  } else if (value <= 20) {
+    elements.tierLabel.textContent = 'Tier 2 (11-20)';
+    elements.tierPrice.textContent = '$11.5/hr';
+    elements.tierLabel.style.color = '#E6B705';
+    elements.tierPrice.style.color = '#E6B705';
+  } else {
+    elements.tierLabel.textContent = 'Tier 3 (21+)';
+    elements.tierPrice.textContent = '$11/hr';
+    elements.tierLabel.style.color = '#A5111F';
+    elements.tierPrice.style.color = '#A5111F';
+  }
+}
+
+function updateFTTierLabels(value) {
+  if (value <= 10) {
+    elements.ftTierLabel.textContent = 'Tier 1 (1-10)';
+    elements.ftTierPrice.textContent = '$10/hr';
+    elements.ftTierLabel.style.color = '#39660b';
+    elements.ftTierPrice.style.color = '#39660b';
+    elements.ftTierLabel.style.fontWeight = '900';
+    elements.ftTierPrice.style.fontWeight = '900';
+  } else if (value <= 20) {
+    elements.ftTierLabel.textContent = 'Tier 2 (11-20)';
+    elements.ftTierPrice.textContent = '$9.50/hr';
+    elements.ftTierLabel.style.color = '#E6B705';
+    elements.ftTierPrice.style.color = '#E6B705';
+  } else {
+    elements.ftTierLabel.textContent = 'Tier 3 (21+)';
+    elements.ftTierPrice.textContent = '$9/hr';
+    elements.ftTierLabel.style.color = '#A5111F';
+    elements.ftTierPrice.style.color = '#A5111F';
+  }
+}
+
 function updateElementText(element, value) {
   if (element && value !== undefined) {
     element.textContent = `$${value.toLocaleString()}`;
@@ -160,7 +312,7 @@ function updateSliderDisplay(sliderElement, displayElement, displayElement2, val
   const percent = value;
   const sliderRect = sliderElement.getBoundingClientRect();
   const thumbWidth = 24;
-  const thumbOffset = (percent / 40) * (sliderRect.width - thumbWidth);  // Changed to use 40 as max
+  const thumbOffset = ((percent - 1) / 39) * (sliderRect.width - thumbWidth);  // Changed to use 39 as range (40-1)
 
   displayElement.textContent = value;
   if (displayElement2) displayElement2.textContent = value;
@@ -175,27 +327,13 @@ function updateSliderDisplay(sliderElement, displayElement, displayElement2, val
 
   let background;
   if (value <= 10) {
-    background = `linear-gradient(to right, #869874 0% ${(percent/40)*100}%, #E5E7EB ${(percent/40)*100}% 100%)`;
+    background = `linear-gradient(to right, #869874 0% ${((percent-1)/39)*100}%, #E5E7EB ${((percent-1)/39)*100}% 100%)`;
   } else if (value <= 20) {
-    background = `linear-gradient(to right, #869874 0% ${(10/40)*100}%, #E6B705 ${(10/40)*100}% ${(percent/40)*100}%, #E5E7EB ${(percent/40)*100}% 100%)`;
+    background = `linear-gradient(to right, #869874 0% ${(9.3/39)*100}%, #E6B705 ${(9.3/39)*100}% ${((percent-1)/39)*100}%, #E5E7EB ${((percent-1)/39)*100}% 100%)`;
   } else {
-    background = `linear-gradient(to right, #869874 0% ${(10/40)*100}%, #E6B705 ${(10/40)*100}% ${(20/40)*100}%, #A5111F ${(20/40)*100}% ${(percent/40)*100}%, #E5E7EB ${(percent/40)*100}% 100%)`;
+    background = `linear-gradient(to right, #869874 0% ${(9.3/39)*100}%, #E6B705 ${(9.3/39)*100}% ${(19/39)*100}%, #A5111F ${(19/39)*100}% ${((percent-1)/39)*100}%, #E5E7EB ${((percent-1)/39)*100}% 100%)`;
   }
   sliderElement.style.background = background;
-}
-
-function toggleToFullTime() {
-  elements.commonVaSection.classList.remove('hidden');
-  elements.twelveDollarSection.classList.add('hidden');
-
-  toggleButtonStyles(true);
-}
-
-function toggleToBilingual() {
-  elements.twelveDollarSection.classList.remove('hidden');
-  elements.commonVaSection.classList.add('hidden');
-
-  toggleButtonStyles(false);
 }
 
 function toggleButtonStyles(isFullTime) {
@@ -222,6 +360,38 @@ function toggleButtonStyles(isFullTime) {
 }
 
 function init() {
+  // Initial setup
+  elements.dropdownRadioHelper.classList.remove('show');
+  elements.dropdownInformation2.classList.add('show');
+  elements.dropdownRadioHelper.parentElement.classList.remove('bg-white');
+  elements.dropdownInformation2.parentElement.classList.add('bg-white');
+  
+  // Set initial states
+  elements.commonVaSection.classList.add('hidden');
+  elements.twelveDollarSection.classList.remove('hidden');
+  dropdownStates.bilingualVA = true;
+  dropdownStates.fullTimeVA = false;
+  
+  // Add transition styles with slower, smoother animations
+  const transitionStyle = 'max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+  elements.dropdownRadioHelper.style.transition = transitionStyle;
+  elements.dropdownInformation2.style.transition = transitionStyle;
+  elements.dropdownRadioHelper.style.overflow = 'hidden';
+  elements.dropdownInformation2.style.overflow = 'hidden';
+  
+  // Set initial heights
+  elements.dropdownRadioHelper.style.maxHeight = '0';
+  elements.dropdownInformation2.style.maxHeight = '2000px';
+  
+  // Set initial button styles
+  toggleButtonStyles(false);
+  
+  // Set initial icons
+  updateExpandCollapseIcon(elements.btn12Dollar, true);
+  updateExpandCollapseIcon(elements.btn12DollarBilingual, true);
+  updateExpandCollapseIcon(elements.btnCommonVA, false);
+  updateExpandCollapseIcon(elements.btnCommonVABilingual, false);
+  
   updateUI(elements.slider.value);
   updateSlider12UI(elements.slider12.value);
   setupEventListeners();
