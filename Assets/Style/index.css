@@ -41,6 +41,10 @@ input[type="range"]::-webkit-slider-thumb {
     margin-top: 8px;
 }
 
+.slider-tick:nth-child(3) { /* Target the "20" mark specifically */
+    transform: translateX(-20%); /* Move the "20" text slightly to the right */
+}
+
 .slider-tick::before {
     content: '';
     position: absolute;
@@ -50,6 +54,10 @@ input[type="range"]::-webkit-slider-thumb {
     width: 2px;
     height: 22px;
     background: #189DA4;
+}
+
+.slider-tick:nth-child(3)::before { /* Target the line for "20" mark */
+    left: 50%; /* Move the indicator line to match the text */
 }
 
 /* Tier label styles */

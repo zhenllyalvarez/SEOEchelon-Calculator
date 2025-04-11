@@ -315,7 +315,7 @@ function updateSliderDisplay(sliderElement, displayElement, displayElement2, val
   const percent = value;
   const sliderRect = sliderElement.getBoundingClientRect();
   const thumbWidth = 24;
-  const thumbOffset = ((percent - 1) / 39) * (sliderRect.width - thumbWidth);  // Changed to use 39 as range (40-1)
+  const thumbOffset = ((percent - 1) / 39) * (sliderRect.width - thumbWidth);
 
   displayElement.textContent = value;
   if (displayElement2) displayElement2.textContent = value;
@@ -332,9 +332,9 @@ function updateSliderDisplay(sliderElement, displayElement, displayElement2, val
   if (value <= 10) {
     background = `linear-gradient(to right, #869874 0% ${((percent-1)/39)*100}%, #E5E7EB ${((percent-1)/39)*100}% 100%)`;
   } else if (value <= 20) {
-    background = `linear-gradient(to right, #869874 0% ${(9.3/39)*100}%, #E6B705 ${(9.3/39)*100}% ${((percent-1)/39)*100}%, #E5E7EB ${((percent-1)/39)*100}% 100%)`;
+    background = `linear-gradient(to right, #869874 0% ${(9/39)*100}%, #E6B705 ${(9/39)*100}% ${((percent-1)/39)*100}%, #E5E7EB ${((percent-1)/39)*100}% 100%)`;
   } else {
-    background = `linear-gradient(to right, #869874 0% ${(9.3/39)*100}%, #E6B705 ${(9.3/39)*100}% ${(19/39)*100}%, #A5111F ${(19/39)*100}% ${((percent-1)/39)*100}%, #E5E7EB ${((percent-1)/39)*100}% 100%)`;
+    background = `linear-gradient(to right, #869874 0% ${(9/39)*100}%, #E6B705 ${(9/39)*100}% ${(19/39)*100}%, #A5111F ${(19/39)*100}% ${((percent-1)/39)*100}%, #E5E7EB ${((percent-1)/39)*100}% 100%)`;
   }
   sliderElement.style.background = background;
 }
