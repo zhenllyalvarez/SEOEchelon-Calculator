@@ -71,7 +71,6 @@ input[type="range"]::-webkit-slider-thumb {
 .tier-3 {
     background-color: #A5111F;  /* Red */
 }
-
 @media (max-width: 768px) {
     .responsive-table {
         font-size: 0.875rem;

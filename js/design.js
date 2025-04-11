@@ -194,12 +194,15 @@ function handleResponsiveChanges() {
 
 function updateUI(value) {
   const cost = calculateTotal(value);
-  elements.totalCost.textContent = `$${cost}`;
+  const annualValues = calculateTotal(value, true, false, false);
+  const vaCost = calculateTotal(value, true, true, false);
+
+  // Calculate total savings as difference between in-house and VA costs
+  const totalSavings = annualValues.totalCost - vaCost.totalCost;
+  elements.totalCost.textContent = `$${totalSavings.toLocaleString()}`;
 
   // Update tier labels based on slider value
   updateFTTierLabels(value);
-
-  const annualValues = calculateTotal(value, true, false, false);
 
   if (typeof annualValues === 'object') {
     updateElementText(elements.annualCost, annualValues.totalCost);
@@ -216,7 +219,6 @@ function updateUI(value) {
   updateElementText(elements.totalCostIfNotVA, annualValues?.totalCost);
 
   if (elements.medicalVA) {
-    const vaCost = calculateTotal(value, true, true, false);
     updateElementText(elements.medicalVA, vaCost.annualWage);
     updateElementText(elements.AwageVA, vaCost.annualWage);
     updateElementText(elements.AwageAlltotalValue, vaCost.annualWage);
@@ -226,13 +228,15 @@ function updateUI(value) {
 }
 
 function updateSlider12UI(value) {
-  const cost = calculateTotal(value, false, false, true);
-  elements.totalCostBilingual.textContent = `$${cost.totalCost.toLocaleString()}`;
+  const annualValues = calculateTotal(value, true, false, false);
+  const vaBilingualCost = calculateTotal(value, true, false, true);
+
+  // Calculate total savings as difference between in-house and bilingual VA costs
+  const totalSavings = annualValues.totalCost - vaBilingualCost.annualWage;
+  elements.totalCostBilingual.textContent = `$${totalSavings.toLocaleString()}`;
 
   // Update tier labels based on slider value
   updateTierLabels(value);
-
-  const annualValues = calculateTotal(value, true, false, false);
 
   if (typeof annualValues === 'object') {
     updateElementText(elements.BilingualVAInHouse, annualValues.totalCost);
@@ -249,7 +253,6 @@ function updateSlider12UI(value) {
   updateElementText(elements.totalCostIfNotVABilingual, annualValues?.totalCost);
 
   if (elements.bilingualMedicalVA) {
-    const vaBilingualCost = calculateTotal(value, true, false, true);
     updateElementText(elements.bilingualMedicalVA, vaBilingualCost.annualWage);
     updateElementText(elements.AnnualWageVABilingual, vaBilingualCost.annualWage);
     updateElementText(elements.totalValueInVABilingual, vaBilingualCost.annualWage);
